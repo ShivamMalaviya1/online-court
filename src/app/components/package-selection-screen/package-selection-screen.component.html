@@ -1,0 +1,138 @@
+<!-- <div class="container flex-wrap mt-5">
+  <div class="">
+    <form [formGroup]="packageForm" class="table-header d-flex align-items-center flex-wrap">
+      <p-dropdown formControlName="selectedPackage" [options]="packageDescriptions" optionLabel="packageName"
+        placeholder="Select a Package" (onChange)="packageSelected()">
+      </p-dropdown>
+      <div class="table-header d-flex align-items-center flex-wrap">
+        <span class="me-2"></span>
+        <span class="p-input-icon-left me-2">
+          <i class="pi pi-search"></i>
+          <p-button label="select" class="me-2" icon="pi pi-plus" (onClick)="showPaymentSectionToggle()"
+            styleClass="w-10rem mx-auto me-2" type="button"></p-button>
+        </span>
+      </div>
+    </form>
+  </div>
+  <div class="package-description">
+    <h3>Package Description</h3>
+    <div class="" *ngIf="currentPackageDescription">
+      <p>{{ currentPackageDescription?.packageDes }}</p>
+
+      <div class="container mt-4">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td class="font-weight-bold">Limit</td>
+              <td>{{ currentPackageDescription?.limit }}</td>
+            </tr>
+            <tr>
+              <td class="font-weight-bold">Capacity</td>
+              <td>{{ currentPackageDescription?.capacity }}</td>
+            </tr>
+            <tr>
+              <td class="font-weight-bold">Amount</td>
+              <td>{{ currentPackageDescription?.amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+
+<div class="container flex-wrap mt-5" *ngIf="showPaymentSection">
+  <form [formGroup]="paymentForm" class="table-header d-flex align-items-center flex-wrap">
+    <div class="payment-options">
+      <h2>Payment Method</h2>
+
+      <div *ngFor="let option of paymentOptions" class="payment-option">
+        <div class="d-flex align-items-center">
+          <p-radioButton formControlName="selectedOption" [value]="option.id"></p-radioButton>
+          <label for="{{ option.id }}" class="ms-2">{{ option.label }}</label>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="package-description">
+    <div class="pay-button">
+      <p-button label="Pay" class="p-button-primary " (click)="pay()" styleClass="w-18rem mx-auto me-2"></p-button>
+    </div>
+  </div>
+</div> -->
+
+<div class="container flex-wrap mt-5">
+  <div class="">
+    <form [formGroup]="packageForm" class="table-header d-flex align-items-center flex-wrap">
+      <p-dropdown formControlName="selectedPackage" [options]="packageDescriptions" optionLabel="packageName"
+        placeholder="Select a Package" (onChange)="packageSelected()">
+      </p-dropdown>
+      <div class="table-header d-flex align-items-center flex-wrap">
+        <span class="me-2"></span>
+        <span class="p-input-icon-left me-2">
+          <i class="pi pi-search"></i>
+          <p-button label="select" class="me-2" icon="pi pi-plus" (onClick)="showPaymentSectionToggle()"
+            styleClass="w-10rem mx-auto me-2" type="button"></p-button>
+        </span>
+      </div>
+    </form>
+  </div>
+
+  <div class="package-description">
+    <h3>Package Description</h3>
+    <div class="" *ngIf="currentPackageDescription">
+      <p>{{ currentPackageDescription?.packageDes }}</p>
+
+
+
+
+
+      <div class="container mt-4">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td class="font-weight-bold">Limit</td>
+              <td>{{ currentPackageDescription?.limit }}</td>
+            </tr>
+            <tr>
+              <td class="font-weight-bold">Capacity</td>
+              <td>{{ currentPackageDescription?.capacity }}</td>
+            </tr>
+            <tr>
+              <td class="font-weight-bold">Amount</td>
+              <td>₹{{ currentPackageDescription?.amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="hasSelectedPackage" class="alert alert-warning mt-3">
+        You have already selected a package.
+        <p>Limit : {{selectedPackage?.limit}}</p>
+        <p>Capacity : {{selectedPackage?.capacity}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container flex-wrap mt-5" *ngIf="showPaymentSection">
+  <form [formGroup]="paymentForm" class="table-header d-flex align-items-center flex-wrap">
+    <div class="payment-options">
+      <h2>Payment Method</h2>
+
+      <div *ngFor="let option of paymentOptions" class="payment-option">
+        <div class="d-flex align-items-center">
+          <p-radioButton formControlName="selectedOption" [value]="option.id"></p-radioButton>
+          <label for="{{ option.id }}" class="ms-2">{{ option.label }}</label>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="package-description">
+    <div class="pay-button">
+      <p-button label="Pay" class="p-button-primary " (click)="pay()" styleClass="w-18rem mx-auto me-2"></p-button>
+    </div>
+  </div>
+</div>

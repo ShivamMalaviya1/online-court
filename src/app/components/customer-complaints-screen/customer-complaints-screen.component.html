@@ -1,0 +1,151 @@
+<div class="card">
+    <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" [value]="complains"
+        [(selection)]="selectedCustomers" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="[
+      'cnrNumber',
+      'caseNumber',
+      'partyName',
+      'validateAndApprove'
+    ]">
+        <ng-template pTemplate="caption">
+            <div class="table-header d-flex align-items-center flex-wrap">
+                <span class="me-2">Complain Page</span>
+                <p-button label="File Complaint" (click)="openAddNumberModal('Complain')" class="me-2" icon="pi pi-file"
+                styleClass="w-10rem mx-auto me-2" type="button"></p-button>
+              
+              <p-button label="Feedback" (click)="openAddNumberModal('Feedback')" class="me-2" icon="pi pi-mail" styleClass="w-12rem mx-auto me-2"
+                type="button"></p-button>
+              
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+                    <div class="flex justify-content-between align-items-center">
+                        No
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="cnrNumber" style="width: 14rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Complain Number
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                        <p-columnFilter type="text" field="cnrNumber" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="date" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Complain Topic
+                        <p-sortIcon field="date"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="date" style="min-width: 18rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Message
+                        <p-sortIcon field="date"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="validateAndApprove" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Complain Date
+                        <p-sortIcon field="validateAndApprove"></p-sortIcon>
+                        <!-- Add filter for validateAndApprove if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="validateAndApprove" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Status
+                        <p-sortIcon field="validateAndApprove"></p-sortIcon>
+                        <!-- Add filter for validateAndApprove if needed -->
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-complains let-i="rowIndex">
+            <tr class="p-selectable-row">
+              <td>
+                <p-tableCheckbox [value]="complains"></p-tableCheckbox>
+              </td>
+              <td>
+                <span class="p-column-title">No</span>
+                {{ i + 1 }}
+              </td>
+              <td>
+                <span class="p-column-title">Complaint Number</span>
+                {{ complains.id }}
+              </td>
+              <td>
+                <span class="p-column-title">Complaint Topic</span>
+                {{ complains.topics }}
+              </td>
+              <td>
+                <span class="p-column-title">Message</span>
+                {{ complains.message }}
+              </td>
+              <td>
+                <span class="p-column-title">Complaint Date</span>
+                {{ complains.createdAt | date : "MM/dd/yyyy" }}
+              </td>
+              
+              <td>
+                <span class="p-column-title">Status</span>
+                {{ complains.status }}
+              </td>
+            </tr>
+          </ng-template>
+          
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No complains found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog [header]="'Add ' + complainForm.get('type').value" [(visible)]="displayModal" [modal]="true"
+    [style]="{'width':'60%', 'max-width':'500px', 'height':'50%'}">
+    <form [formGroup]="complainForm" (ngSubmit)="submit()" class="p-fluid">
+        <div class="p-field p-grid p-jc-center">
+            <label class="p-col-3">Topic:</label>
+            <div class="p-col-9">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-tag"></i>
+                    </span>
+                    <input pInputText type="text" class="p-inputtext" formControlName="topics" />
+                </div>
+                <small *ngIf="complainForm.get('topics').hasError('required') && (complainForm.get('topics').touched)"
+                    class="p-error">Topic is required</small>
+            </div>
+        </div>
+
+        <div class="p-field p-grid p-jc-center">
+            <label class="p-col-3">Message:</label>
+            <div class="p-col-9">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-comment"></i>
+                    </span>
+                    <textarea pInputText type="text" class="p-inputtext" formControlName="message"></textarea>
+                </div>
+                <small *ngIf="complainForm.get('message').hasError('required') && (complainForm.get('message').touched)"
+                    class="p-error">Message is required</small>
+            </div>
+        </div>
+
+        <div class="p-field p-grid p-jc-center">
+            <div class="p-col-12 p-md-3">
+                <p-button label="Submit"  icon="pi pi-check" styleClass="w-100" type="submit"
+                    [disabled]="complainForm.invalid"></p-button>
+            </div>
+        </div>
+    </form>
+</p-dialog>

@@ -1,0 +1,290 @@
+<div class="card" *ngIf="adminTrsnaction===false">
+    <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" [value]="transactions"
+        [(selection)]="selectedCustomers" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"  [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="[
+      'cnrNumber',
+      'caseNumber',
+      'partyName',
+      'validateAndApprove'
+    ]">
+        <ng-template pTemplate="caption">
+            <div class="table-header d-flex align-items-center flex-wrap">
+                <span class="me-2">Transaction Page</span>
+                <!-- <span class="p-input-icon-left me-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Complain number" class="p-inputtext" />
+                </span> -->
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+                    <div class="flex justify-content-between align-items-center">
+                        No
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Transaction Id
+                        <p-columnFilter type="text" field="cnrNumber" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Package
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+
+                <th pSortableColumn="partyName" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Customer Name
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                      
+                    </div>
+                </th>
+
+                <th pSortableColumn="date" style="min-width: 6rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Customer Email
+                        <p-sortIcon field="date"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Payment method
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Purchased Date
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Status
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <!-- <th pSortableColumn="date" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Options/View Download
+                    </div>
+                </th> -->
+            </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="body" let-transactions let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="transactions"></p-tableCheckbox>
+                </td>
+        
+                <td>
+                    <span class="p-column-title">No</span>
+                    {{ i + 1 }}
+                </td>
+        
+                <td>
+                    <span class="p-column-title">Transaction Id</span>
+                    {{ transactions?.transactionId }}
+                </td>
+                <td>
+                    <span class="p-column-title">Package</span>
+                    {{ transactions?.userPackage?.packageName }}
+                </td>
+        
+                <td>
+                    <span class="p-column-title">Customer Name</span>
+                    {{ transactions?.user?.firstName }} {{ transactions?.user?.lastName }}
+                </td>
+                <td>
+                    <span class="p-column-title">Customer Email</span>
+                    <a [href]="'mailto:' + transactions?.user?.email" style="color: black;">{{ transactions?.user?.email }}</a>
+                </td>
+                <td>
+                    <span class="p-column-title">Payment Method</span>
+                    {{ transactions?.paymentMethod }}
+                </td>
+                <td>
+                    <span class="p-column-title">Purchased Date</span>
+                    {{ transactions?.createdAt | date : "MM/dd/yyyy" }}
+                </td>
+                <td>
+                    <span class="p-column-title">Status</span>
+                    {{ transactions?.transactionStatus }}
+                </td>
+                <!-- <td>
+                    <p-button label="download"></p-button>
+                </td> -->
+            </tr>
+        </ng-template>
+        
+        
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No transaction found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<div class="card" *ngIf="adminTrsnaction===true">
+    <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" [value]="adminSideTransaction"
+        [(selection)]="selectedCustomers" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"  [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="[
+      'cnrNumber',
+      'caseNumber',
+      'partyName',
+      'validateAndApprove'
+    ]">
+        <ng-template pTemplate="caption">
+            <div class="table-header d-flex align-items-center flex-wrap">
+                <span class="me-2">Transaction Page</span>
+                <!-- <span class="p-input-icon-left me-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Complain number" class="p-inputtext" />
+                </span> -->
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+                    <div class="flex justify-content-between align-items-center">
+                        No
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Transaction Id
+                        <p-columnFilter type="text" field="cnrNumber" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Package
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+
+                <th pSortableColumn="partyName" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Customer Name
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                      
+                    </div>
+                </th>
+
+                <th pSortableColumn="date" style="min-width: 6rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Customer Email
+                        <p-sortIcon field="date"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Payment method
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Purchased Date
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Status
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <!-- <th pSortableColumn="date" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Options/View Download
+                    </div>
+                </th> -->
+            </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="body" let-transactions let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="transactions"></p-tableCheckbox>
+                </td>
+        
+                <td>
+                    <span class="p-column-title">No</span>
+                    {{ i + 1 }}
+                </td>
+        
+                <td>
+                    <span class="p-column-title">Transaction Id</span>
+                    {{ transactions?.transactionId }}
+                </td>
+                <td>
+                    <span class="p-column-title">Package</span>
+                    {{ transactions?.userPackage?.packageName }}
+                </td>
+        
+                <td>
+                    <span class="p-column-title">Customer Name</span>
+                    {{ transactions?.user?.firstName }} {{ transactions?.user?.lastName }}
+                </td>
+                <td>
+                    <span class="p-column-title">Customer Email</span>
+                    <a [href]="'mailto:' + transactions?.user?.email" style="color: black;">{{ transactions?.user?.email }}</a>
+                </td>
+                <td>
+                    <span class="p-column-title">Payment Method</span>
+                    {{ transactions?.paymentMethod }}
+                </td>
+                <td>
+                    <span class="p-column-title">Purchased Date</span>
+                    {{ transactions?.createdAt | date : "MM/dd/yyyy" }}
+                </td>
+                <td>
+                    <span class="p-column-title">Status</span>
+                    {{ transactions?.transactionStatus }}
+                </td>
+                <!-- <td>
+                    <p-button label="download"></p-button>
+                </td> -->
+            </tr>
+        </ng-template>
+        
+        
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No transaction found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

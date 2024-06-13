@@ -1,0 +1,25 @@
+/* Add this styling for responsiveness */
+@media screen and (max-width: 767px) {
+   .responsive-steps .p-steps {
+      display: block;
+      overflow: auto !important;
+    }
+    
+  nav{
+    overflow: auto !important;
+  }
+    .p-steps .p-steps-item {
+      width: 100% !important;
+    }
+    .p-steps .p-steps-item.p-highlight .p-steps-title {
+        font-weight: 600;
+        text-decoration: none;
+        color: #495057;
+        font-size: smaller;
+        text-underline-position: under;
+    }
+    .p-steps-item {
+        font-size: smaller;
+    }
+  }
+  

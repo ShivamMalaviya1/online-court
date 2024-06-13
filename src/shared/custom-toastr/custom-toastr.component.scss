@@ -1,0 +1,207 @@
+:host {
+    position: relative;
+    overflow: hidden;
+    margin: 0 0 6px;
+    color: #000;
+    pointer-events: all;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+ ::ng-deep .toast-container {
+    pointer-events: none;
+    position: fixed;
+    z-index: 999999;
+}
+
+ ::ng-deep .toast-top-right {
+    top: 12px;
+    right: 12px;
+}
+
+.toast-close-button {
+    color: #999;
+    opacity: 1;
+}
+
+.toast-close-button:hover {
+    color: whitesmoke;
+}
+
+ ::ng-deep .toast-error,
+ ::ng-deep .toast-info,
+ ::ng-deep .toast-warning,
+ ::ng-deep .toast-success {
+    background-image: none;
+}
+
+ ::ng-deep .toast-info {
+    display: flex;
+    color: #3377FF;
+    background-color: lighten($color: #3377FF, $amount: 30%);
+    max-width: 500px;
+    min-height: 80px;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px rgba(100, 100, 100, 0.5);
+    margin: 5px 30px 5px 0;
+    background-image: none;
+    padding: 0 15px;
+    mat-icon {
+        color: #3377FF !important;
+    }
+    .toast-close-button {
+        color: #3377FF !important;
+    }
+}
+
+ ::ng-deep .toast-error {
+    display: flex;
+    background-image: none;
+    color: #f44336;
+    background-color: lighten($color: #f44336, $amount: 30%);
+    max-width: 500px;
+    min-height: 80px;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px rgba(100, 100, 100, 0.5);
+    margin: 5px 30px 5px 0;
+    padding: 0 15px;
+    mat-icon {
+        color: #f44336 !important;
+    }
+    .toast-close-button {
+        color: #f44336 !important;
+    }
+}
+
+ ::ng-deep .toast-success {
+    background-image: none;
+    display: flex;
+    background-color: lighten($color: #4CAF50, $amount: 30%);
+    color: #4CAF50;
+    max-width: 500px;
+    min-height: 80px;
+    border-radius: 4px;
+    // box-shadow: 0 3px 5px rgba(100, 100, 100, 0.5);
+    margin: 5px 30px 5px 0;
+    padding: 0 15px;
+    mat-icon {
+        color: #4CAF50 !important;
+    }
+    .toast-close-button {
+        color: #4CAF50 !important;
+    }
+}
+
+ ::ng-deep .toast-warning {
+    background-image: none;
+    display: flex;
+    color: darkgoldenrod;
+    background-color: #FFFF99;
+    max-width: 500px;
+    min-height: 80px;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px rgba(100, 100, 100, 0.5);
+    margin: 5px 30px 5px 0;
+    padding: 0 15px;
+    mat-icon {
+        color: darkgoldenrod !important;
+    }
+    .toast-close-button {
+        color: darkgoldenrod !important;
+    }
+}
+
+.toaster .toast-icon {
+    border-radius: 4px 0 0 4px;
+}
+
+.toaster .toast-icon.custom-toast-success {
+    background-color: #85c973;
+    margin: auto;
+}
+
+.toaster .toast-icon.custom-toast-success #warning-icon,
+.toaster .toast-icon.custom-toast-success #info-icon,
+.toaster .toast-icon.custom-toast-success #error-icon {
+    display: none;
+}
+
+.toaster .toast-icon.custom-toast-warning {
+    background-color: #FFFF99;
+    margin: auto;
+}
+
+.toaster .toast-icon.custom-toast-warning #success-icon,
+.toaster .toast-icon.custom-toast-warning #info-icon,
+.toaster .toast-icon.custom-toast-warning #error-icon {
+    display: none;
+}
+
+.toaster .toast-icon.custom-toast-error {
+    background-color: #FFCCCB;
+    margin: auto;
+}
+
+.toaster .toast-icon.custom-toast-error #success-icon,
+.toaster .toast-icon.custom-toast-error #info-icon,
+.toaster .toast-icon.custom-toast-error #warning-icon {
+    display: none;
+}
+
+.toaster .toast-icon.custom-toast-info {
+    background-color: #45A7E7;
+    margin: auto;
+}
+
+.toaster .toast-icon.custom-toast-info #success-icon,
+.toaster .toast-icon.custom-toast-info #error-icon,
+.toaster .toast-icon.custom-toast-info #warning-icon {
+    display: none;
+}
+
+.toast-icon {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    margin: auto;
+    display: flex;
+}
+
+.toast-icon i {
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    left: 43%;
+    transform: translate(-40%, -50%);
+}
+
+.toast-title {
+    font-size: 16px;
+}
+
+.toast-message {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 15px;
+    line-height: 1.2;
+    text-align: left;
+}
+
+.toast-details {
+    margin: 0 10px 0 5px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.close-icon {
+    position: relative;
+}
+
+.close-icon .toast-close-button {
+    // position: absolute;
+    top: 39%;
+    // color: white;
+    // font-size: 25px;
+    // font-weight: 100;
+}

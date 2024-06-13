@@ -1,0 +1,57 @@
+/* Add this to your component's CSS or styles file */
+:host ::ng-deep .add-class {
+    width: 300px;
+    max-width: 100%;
+    height: 100%;
+    // position: relative;
+    // top: 0;
+    // right: -300px; /* Start off-screen */
+    transition: right 0.3s ease-in-out;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  /* Customize the overlay panel header */
+  :host ::ng-deep .add-class .ui-overlaypanel-titlebar {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 0;
+    padding: 1rem;
+  }
+  
+  /* Customize the form inside the overlay panel */
+  :host ::ng-deep .add-class form {
+    padding: 1rem;
+  }
+  
+  /* Customize form fields */
+  :host ::ng-deep .add-class .p-field {
+    margin-bottom: 1rem;
+    width: 100%; /* Set the width to 100% for mobile devices */
+  }
+  
+  /* Customize buttons */
+  :host ::ng-deep .add-class button {
+    width: 100%; /* Set the width to 100% for mobile devices */
+  }
+  
+  /* Show the overlay panel */
+  .overlay-panel-open {
+    right: 0;
+  }
+  
+  /* Mobile responsiveness */
+  @media screen and (max-width: 767px) {
+    :host ::ng-deep .add-class {
+      width: 100%;
+      max-width: 100%;
+      right: -100%;
+    }
+  
+    .overlay-panel-open {
+      right: 0;
+    }
+    
+  }
+  

@@ -1,0 +1,130 @@
+<div class="card">
+    <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm"
+    [value]="complains" [loading]="loading" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
+    (onLazyLoad)="loadComplaintsLazy()"
+    [globalFilterFields]="['complainNumber', 'customerId', 'customerName', 'email']">
+
+        <ng-template pTemplate="caption">
+            <div class="table-header d-flex align-items-center flex-wrap">
+                <span class="me-2">Complains Page</span>
+                <!-- <span class="p-input-icon-left me-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Complain number" class="p-inputtext" />
+                </span> -->
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+                    <div class="flex justify-content-between align-items-center">
+                        No
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="cnrNumber" style="width: 14rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Complain Number
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                        <p-columnFilter type="text" field="cnrNumber" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Customer Name
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Customer Email
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="date" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Complain Topic
+                        <p-sortIcon field="date"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="date" style="min-width: 18rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Message
+                        <p-sortIcon field="date"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="validateAndApprove" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Complain Date
+                        <p-sortIcon field="validateAndApprove"></p-sortIcon>
+                        <!-- Add filter for validateAndApprove if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="validateAndApprove" style="min-width: 5rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Status
+                        <p-sortIcon field="validateAndApprove"></p-sortIcon>
+                        <!-- Add filter for validateAndApprove if needed -->
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-complains let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="complains"></p-tableCheckbox>
+                </td>
+                <td>
+                    <span class="p-column-title">No</span>
+                    {{ i + 1 }}
+                </td>
+                <td>
+                    <span class="p-column-title">Complain Number</span>
+                    {{ complains?.complainNumber }}
+                </td>
+                <td>
+                    <span class="p-column-title">Customer Name</span>
+                    {{ complains?.customerName }}
+                </td>
+                <td>
+                    <span class="p-column-title" style="cursor: pointer;">Customer Email</span>
+                    <a [href]="'mailto:' + complains.email" style="color: black;">{{ complains.email }}</a>
+                </td>
+                <td>
+                    <span class="p-column-title">Complain Topic</span>
+                    {{ complains?.topic }}
+                </td>
+                <td>
+                    <span class="p-column-title">Message</span>
+                    {{ complains?.message }}
+                </td>
+                <td>
+                    <span class="p-column-title">Complain Date</span>
+                    {{ complains?.date | date : "MM/dd/yyyy" }}
+                </td>
+                <td>
+                    <span class="p-column-title">Status</span>
+                    <p-dropdown id="status" [options]="statusOptions"  onchange="up" [(ngModel)]="complains.status"
+                                placeholder="Select a status"  (onChange)="onStatusChange(complains) "></p-dropdown>
+                  </td>
+                  <div style="margin-top: 100px;">
+
+                  </div>
+                  
+            </tr>
+           
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No complains found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

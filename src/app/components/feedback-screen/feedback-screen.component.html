@@ -1,0 +1,105 @@
+<div class="card">
+    <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" [value]="feedbacks"
+        [(selection)]="selectedCustomers" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="[
+      'cnrNumber',
+      'caseNumber',
+      'partyName',
+      'validateAndApprove'
+    ]">
+        <ng-template pTemplate="caption">
+            <div class="table-header d-flex align-items-center flex-wrap">
+                <span class="me-2">Feedback Page</span>
+                <!-- <span class="p-input-icon-left me-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Complain number" class="p-inputtext" />
+                </span> -->
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+                    <div class="flex justify-content-between align-items-center">
+                        No
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="cnrNumber" style="width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Feedback Id
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                        <p-columnFilter type="text" field="cnrNumber" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="partyName" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Customer Name
+                        <p-sortIcon field="partyName"></p-sortIcon>
+                        <!-- Add filter for partyName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="date" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Customer Email
+                        <p-sortIcon field="date"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="date" style="min-width: 18rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Feedback
+                    </div>
+                </th>
+                <th pSortableColumn="validateAndApprove" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Recieved Date
+                        <p-sortIcon field="validateAndApprove"></p-sortIcon>
+                        <!-- Add filter for validateAndApprove if needed -->
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-feedbacks let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="feedbacks"></p-tableCheckbox>
+                </td>
+                <td>
+                    <span class="p-column-title">No</span>
+                    {{ i + 1 }}
+                </td>
+                <td>
+                    <span class="p-column-title">Feedback Id</span>
+                    {{ feedbacks.complainNumber }}
+                </td>
+                <td>
+                    <span class="p-column-title">Customer Name</span>
+                    {{ feedbacks.customerName }}
+                </td>
+                <td>
+                    <span class="p-column-title" style="cursor: pointer;">Customer Email</span>
+                    <a [href]="'mailto:' + feedbacks.email" style="color: black;">{{ feedbacks.email }}</a>
+                </td>
+                <td>
+                    <span class="p-column-title">Feedback</span>
+                    {{ feedbacks.message }}
+                </td>
+                <td>
+                    <span class="p-column-title">Recieved Date</span>
+                    {{ feedbacks.date | date : "MM/dd/yyyy" }}
+                </td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No complains found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

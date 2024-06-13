@@ -1,0 +1,141 @@
+<div class="card">
+  <p-table
+    #dt
+    [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-sm"
+    [value]="customers"
+    [(selection)]="selectedCustomers"
+    dataKey="id"
+    [rowHover]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="loading"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0"
+    [globalFilterFields]="['crnNumber', 'caseNumber', 'date', 'status']"
+  >
+    <ng-template pTemplate="caption">
+      <div class="table-header d-flex align-items-center flex-wrap">
+        <span class="me-2">Message History</span>
+        <span class="p-input-icon-left me-2">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            placeholder="CNR Search"
+            class="p-inputtext"
+          />
+        </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="id" style="min-width: 3rem">
+          <div class="flex justify-content-between align-items-center">
+            No
+            <p-sortIcon field="id"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="partyName" style="min-width: 10rem">
+          <div class="flex justify-content-between align-items-center">
+              Customer Name
+              <p-sortIcon field="partyName"></p-sortIcon>
+              <!-- Add filter for partyName if needed -->
+          </div>
+      </th>
+      <th pSortableColumn="partyName" style="min-width: 10rem">
+          <div class="flex justify-content-between align-items-center">
+              Customer Email
+              <p-sortIcon field="partyName"></p-sortIcon>
+              <!-- Add filter for partyName if needed -->
+          </div>
+      </th>
+        <th pSortableColumn="crnNumber" style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center">
+            Cnr Number
+            <p-sortIcon field="crnNumber"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="crnNumber"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th pSortableColumn="caseNumber" style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center">
+            Case Number
+            <p-sortIcon field="caseNumber"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="caseNumber" style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center">
+            Reciever Number
+            <p-sortIcon field="caseNumber"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="date" style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center">
+            Date
+            <p-sortIcon field="date"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="status" style="min-width: 8rem">
+          <div class="flex justify-content-between align-items-center">
+            Status
+            <p-sortIcon field="status"></p-sortIcon>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer let-i="rowIndex">
+      <tr class="p-selectable-row">
+        <td>
+          <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+        </td>
+        <td>
+          <span class="p-column-title">No</span>
+          {{ i + 1 }}
+        </td>
+        <td>
+          {{customer.firstName}}
+        </td>
+        <td>{{customer.userEmail}}</td>
+        <td>
+          <span class="p-column-title">Cnr Number</span>
+          {{ customer.crnNumber }}
+        </td>
+        <td>
+          <span class="p-column-title">Case Number</span>
+          {{ customer.caseNumber }}
+        </td>
+        <td>
+          <span class="p-column-title">Reciever Number</span>
+          {{ customer.receaverNumber }}
+        </td>
+        <td>
+          <span class="p-column-title">Date</span>
+          {{ customer.date | date : "MM/dd/yyyy" }}
+        </td>
+        <td>
+          <span class="p-column-title">Status</span>
+          <p-tag
+            [value]="customer.status"
+            [severity]="getSeverity(customer.status)"
+          ></p-tag>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">No cases found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

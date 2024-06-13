@@ -1,0 +1,127 @@
+<!-- Button to open the add number modal -->
+
+<!-- Container for numbers -->
+<div class="container flex-wrap mt-5">
+  <!-- List of numbers -->
+
+  <!-- <p-table [value]="numbers">
+    <ng-template pTemplate="caption">
+      <div class="table-header d-flex align-items-center flex-wrap">
+        <span class="me-2">Add Mobile</span>
+        <span class="p-input-icon-left me-2">
+          <i class="pi pi-search"></i>
+          <p-button label="" class="me-2" icon="pi pi-plus" styleClass="w-10rem mx-auto me-2" type="button"
+            (click)="openAddNumberModal()"></p-button>
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+
+      </tr>
+      <tr>
+        <th style="width: 10rem">Mobile Number</th>
+        <th style="width: 2rem">Delete</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-number>
+      <tr>
+        <td>{{ number }}</td>
+        <td> <p-button class="me-2 " icon="pi pi-trash" styleClass="w-3rem mx-auto me-2" type="button"
+            (click)="deleteNumber(number)"></p-button> </td>
+      </tr>
+    </ng-template>
+  </p-table> -->
+
+  <!-- your-component.component.html -->
+
+  <div>
+    <p-table [value]="mobileMaintenances" [style]="{ 'height': '60vh', 'overflow-y': 'scroll' }">
+      <ng-template pTemplate="caption">
+        <div class="table-header d-flex align-items-center flex-wrap">
+          <span class="me-2">Add Mobile</span>
+          <span class="p-input-icon-left me-2">
+            <i class="pi pi-search"></i>
+            <p-button label="" class="me-2" icon="pi pi-plus" styleClass="w-10rem mx-auto me-2" type="button"
+              (click)="openAddNumberModal()"></p-button>
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 10rem">Mobile Number</th>
+          <th style="width: 2rem">Delete</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-mobileMaintenance>
+        <tr *ngIf="mobileMaintenance.isActive">
+          <td>{{ mobileMaintenance.number }}</td>
+
+          <td>
+            <p-button class="me-2 " icon="pi pi-trash" styleClass="w-3rem mx-auto me-2" type="button"
+              (click)="confirm2($event,mobileMaintenance.id)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+  <div class="package-description">
+    <h3>Package Description</h3>
+    <p> {{packages?.userPackage?.packageName}} </p>
+    <p> {{packages?.userPackage?.packageDes}} </p>
+
+    <div *ngIf="packages" class="alert alert-warning mt-3">
+      You current package info.
+    </div>
+
+    <div class="container mt-4">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td class="font-weight-bold">Limit</td>
+            <td>{{ packages?.userPackage?.limit }}</td>
+          </tr>
+          <tr>
+            <td class="font-weight-bold">Capacity</td>
+            <td>{{ packages?.userPackage?.capacity }}</td>
+          </tr>
+          <tr>
+            <td class="font-weight-bold">Amount</td>
+            <td>₹{{ packages?.userPackage?.amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Package descriptions (static) -->
+
+
+<!-- Add Number Modal -->
+<p-dialog header="Add Mobile Number" [(visible)]="displayModal" [modal]="true">
+  <form [formGroup]="addNumberForm" (ngSubmit)="addNumber()" class="d-flex align-items-center">
+    <div class="p-field p-d-flex p-flex-wrap p-jc-center p-ai-center gap-2">
+      <label class="w-6rem">Mobile:</label>
+      <div class="p-inputgroup ">
+        <span class="p-inputgroup-addon">
+          <i class="pi pi-mobile"></i>
+        </span>
+        <input pInputText type="text" class="p-inputtext" formControlName="mobileNumber" />
+      </div>
+      <small
+        *ngIf="addNumberForm.get('mobileNumber').hasError('required') && (addNumberForm.get('mobileNumber').touched)"
+        class="p-error">Mobile Number is required</small>
+      <small
+        *ngIf="addNumberForm.get('mobileNumber').hasError('pattern') && (addNumberForm.get('mobileNumber').touched)"
+        class="p-error">Invalid mobile number format</small>
+    </div>
+
+    <p-button label="Submit" class=" ms-2 me-2 mt-5" icon="pi pi-plus" styleClass="w-10rem mx-auto me-2" type="submit"
+      [disabled]="addNumberForm.invalid"></p-button>
+  </form>
+</p-dialog>
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

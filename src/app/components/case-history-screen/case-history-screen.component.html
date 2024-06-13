@@ -1,0 +1,324 @@
+<div class="card m-3 mt-5" *ngIf="!userCasesdata">
+    <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" [value]="caseDetails"
+        [(selection)]="selectedCases" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['caseMaster.cnrNumber', 'caseMaster.caseDetails[0].cnrNumber', 'caseMaster.caseDetails[0].caseNumber', 'caseMaster.caseDetails[0].caseStatus', 'caseMaster.caseDetails[0].previousDate', 'caseMaster.caseDetails[0].nextDate', 'caseMaster.caseDetails[0].status', 'caseMaster.caseDetails[0].complaintName', 'caseMaster.caseDetails[0].respondentName', 'caseMaster.caseDetails[0].purposeOfHearing', 'caseMaster.caseDetails[0].business']">
+        <ng-template pTemplate="caption">
+            <div class="table-header d-flex align-items-center flex-wrap">
+                <span class="me-2"> Case History</span>
+                <span class="p-input-icon-left me-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Enter CNR" class="p-inputtext" />
+                </span>
+                <p-button label="Search" class="me-2" icon="pi pi-search" styleClass="w-8rem mx-auto me-2"
+                    type="button"></p-button>
+                <p-button *ngIf="selectedCases.length > 0" label="Send WhatsApp" class="me-2" icon="pi pi-whatsapp"
+                    styleClass="w-12rem mx-auto me-2" type="button" (click)="sendWhatsAppMessage()"></p-button>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+                    <div class="flex justify-content-between align-items-center">
+                        No
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 11rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Cnr Number
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                        <p-columnFilter type="text" field="cnrNumber" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="caseNumber" style="min-width: 9rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Case Number
+                        <p-sortIcon field="caseMaster.caseDetails[0].caseNumber"></p-sortIcon>
+                        <!-- Add filter for caseNumber if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="caseStatus" style="min-width: 9rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Case Status
+                        <p-sortIcon field="caseMaster.caseDetails[0].caseStatus"></p-sortIcon>
+                        <!-- Add filter for caseStatus if needed -->
+                    </div>
+                </th>
+
+                <th pSortableColumn="previousDate" style="min-width: 9rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Previous Date
+                        <p-sortIcon field="caseMaster.caseDetails[0].previousDate"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="nextDate" style="min-width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Next Date
+                        <p-sortIcon field="caseMaster.caseDetails[0].nextDate"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="status" style="min-width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Status
+                        <p-sortIcon field="caseMaster.caseDetails[0].status"></p-sortIcon>
+                        <!-- Add filter for status if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="complaintName" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Complaint Name
+                        <p-sortIcon field="caseMaster.caseDetails[0].complaintName"></p-sortIcon>
+                        <!-- Add filter for complaintName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="respondentName" style="min-width: 11rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Respondent Name
+                        <p-sortIcon field="caseMaster.caseDetails[0].respondentName"></p-sortIcon>
+                        <!-- Add filter for respondentName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="purposeOfHearing" style="min-width: 12rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Purpose Of Hearing
+                        <p-sortIcon field="caseMaster.caseDetails[0].purposeOfHearing"></p-sortIcon>
+                        <!-- Add filter for purposeOfHearing if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="business" style="min-width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Business
+                        <p-sortIcon field="caseMaster.caseDetails[0].business"></p-sortIcon>
+                        <!-- Add filter for business if needed -->
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cases let-i="rowIndex">
+            <tr class="p-selectable-row" *ngIf=" cases.caseMaster.caseDetails[0].isActive">
+                <td>
+                    <p-tableCheckbox [value]="cases"></p-tableCheckbox>
+                </td>
+                <td>
+                    <span class="p-column-title">No</span>
+                    {{ cases.caseMaster.id }}
+                </td>
+                <td>
+                    <span class="p-column-title">Cnr Number</span>
+                    {{ cases.caseMaster.cnrNumber }}
+                </td>
+                <td>
+                    <span class="p-column-title">Case Number</span>
+                    {{ cases.caseMaster.caseDetails[0].caseNumber }}
+                </td>
+                <td>
+                    <span class="p-column-title">Case Status</span>
+                    {{ cases.caseMaster.caseDetails[0].caseStatus }}
+                </td>
+                <td>
+                    <span class="p-column-title">Previous Date</span>
+                    {{ cases.caseMaster.caseDetails[0].first_hearing_date  }}
+                </td>
+                <td>
+                    <span class="p-column-title">Next Date</span>
+                    {{ cases.caseMaster.caseDetails[0].next_hearing_date  }}
+                </td>
+                <td>
+                    <span class="p-column-title">Status</span>
+                    {{ cases.caseMaster.caseDetails[0].case_stage }}
+                </td>
+                <td>
+                    <span class="p-column-title">Complaint Name</span>
+                    {{ cases.caseMaster.caseDetails[0].complaintName }}
+                </td>
+                <td>
+                    <span class="p-column-title">Respondent Name</span>
+                    {{ cases.caseMaster.caseDetails[0].respondentName }}
+                </td>
+                <td>
+                    <span class="p-column-title">Purpose Of Hearing</span>
+                    {{ cases.caseMaster.caseDetails[0].first_hearing_date }}
+                </td>
+                <td>
+                    <span class="p-column-title">Business</span>
+                    {{ cases.caseMaster.caseDetails[0].business }}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No cases found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div class="card m-3 mt-5" *ngIf="userCasesdata">
+    <!-- <p> at user</p> -->
+    <p-table #dt [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-sm" [value]="userCase"
+        [(selection)]="selectedCases" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['caseMaster.cnrNumber', 'caseMaster.caseDetails[0].cnrNumber', 'caseMaster.caseDetails[0].caseNumber', 'caseMaster.caseDetails[0].caseStatus', 'caseMaster.caseDetails[0].previousDate', 'caseMaster.caseDetails[0].nextDate', 'caseMaster.caseDetails[0].status', 'caseMaster.caseDetails[0].complaintName', 'caseMaster.caseDetails[0].respondentName', 'caseMaster.caseDetails[0].purposeOfHearing', 'caseMaster.caseDetails[0].business']">
+        <ng-template pTemplate="caption">
+            <div class="table-header d-flex align-items-center flex-wrap">
+                <span class="me-2"> Case History</span>
+                <span class="p-input-icon-left me-2">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Enter CNR" class="p-inputtext" />
+                </span>
+                <p-button label="Search" class="me-2" icon="pi pi-search" styleClass="w-8rem mx-auto me-2"
+                    type="button"></p-button>
+             
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 3rem">
+                    <div class="flex justify-content-between align-items-center">
+                        No
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="cnrNumber" style="min-width: 11rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Cnr Number
+                        <p-sortIcon field="cnrNumber"></p-sortIcon>
+                        <p-columnFilter type="text" field="cnrNumber" display="menu" class="ml-auto"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="caseNumber" style="min-width: 9rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Case Number
+                        <p-sortIcon field="caseMaster.caseDetails[0].caseNumber"></p-sortIcon>
+                        <!-- Add filter for caseNumber if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="caseStatus" style="min-width: 9rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Case Status
+                        <p-sortIcon field="caseMaster.caseDetails[0].caseStatus"></p-sortIcon>
+                        <!-- Add filter for caseStatus if needed -->
+                    </div>
+                </th>
+
+                <th pSortableColumn="previousDate" style="min-width: 9rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Previous Date
+                        <p-sortIcon field="caseMaster.caseDetails[0].previousDate"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="nextDate" style="min-width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Next Date
+                        <p-sortIcon field="caseMaster.caseDetails[0].nextDate"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="status" style="min-width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Status
+                        <p-sortIcon field="caseMaster.caseDetails[0].status"></p-sortIcon>
+                        <!-- Add filter for status if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="complaintName" style="min-width: 10rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Complaint Name
+                        <p-sortIcon field="caseMaster.caseDetails[0].complaintName"></p-sortIcon>
+                        <!-- Add filter for complaintName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="respondentName" style="min-width: 11rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Respondent Name
+                        <p-sortIcon field="caseMaster.caseDetails[0].respondentName"></p-sortIcon>
+                        <!-- Add filter for respondentName if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="purposeOfHearing" style="min-width: 12rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Purpose Of Hearing
+                        <p-sortIcon field="caseMaster.caseDetails[0].purposeOfHearing"></p-sortIcon>
+                        <!-- Add filter for purposeOfHearing if needed -->
+                    </div>
+                </th>
+                <th pSortableColumn="business" style="min-width: 8rem">
+                    <div class="flex justify-content-between align-items-center">
+                        Business
+                        <p-sortIcon field="caseMaster.caseDetails[0].business"></p-sortIcon>
+                        <!-- Add filter for business if needed -->
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body"  let-userCase let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="userCase"></p-tableCheckbox>
+                </td>
+             
+                <td>
+                    <span class="p-column-title">No</span>
+                    {{ i + 1 }}
+                </td>
+                <td>
+                    <span class="p-column-title">Cnr Number</span>
+                    {{userCase.cnrNumber }}
+                </td>
+                
+                <td>
+                    <span class="p-column-title">Case Number</span>
+                    {{ userCase.caseNumber }}
+                </td>
+                <td>
+                    <span class="p-column-title">Case Status</span>
+                    {{ userCase.caseStatus }}
+                </td>
+                <td>
+                    <span class="p-column-title">Previous Date</span>
+                    {{ userCase.first_hearing_date  }}
+                </td>
+                <td>
+                    <span class="p-column-title">Next Date</span>
+                    {{userCase.next_hearing_date  }}
+                </td>
+                <td>
+                    <span class="p-column-title">Status</span>
+                    {{ userCase.case_stage }}
+                </td>
+                <td>
+                    <span class="p-column-title">Complaint Name</span>
+                    {{ userCase.complaintName }}
+                </td>
+                <td>
+                    <span class="p-column-title">Respondent Name</span>
+                    {{ userCase.respondentName }}
+                </td>
+                <td>
+                    <span class="p-column-title">Purpose Of Hearing</span>
+                    {{ userCase.first_hearing_date }}
+                </td>
+                <td>
+                    <span class="p-column-title">Business</span>
+                    {{ userCase.business }}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No cases found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

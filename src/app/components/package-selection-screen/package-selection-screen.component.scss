@@ -1,0 +1,12 @@
+/* main.component.css */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .package-description {
+    max-width: 300px; /* Adjust the width as needed */
+    margin-top: 20px;
+  }
+  
